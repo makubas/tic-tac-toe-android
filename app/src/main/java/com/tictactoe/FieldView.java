@@ -33,7 +33,7 @@ public class FieldView extends androidx.appcompat.widget.AppCompatImageView{
     }
 
     public Shape getShape() {
-        return shape;
+        return this.shape;
     }
 
     public void setShape(Shape shape) {
