@@ -4,15 +4,16 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 
-public class FieldView extends View{
+public class FieldView extends androidx.appcompat.widget.AppCompatImageView{
     private Shape shape;
 
     public FieldView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.shape = Shape.NONE;
-        MainGameActivity activity = (MainGameActivity) context;
-        setBackgroundColor(Color.GRAY);
+        LocalPvpActivity activity = (LocalPvpActivity) context;
+        setImageResource(R.drawable.blank);
 
         setOnClickListener(new View.OnClickListener() {
             @Override
@@ -21,9 +22,9 @@ public class FieldView extends View{
                 {
                     shape = activity.getCurrentShape();
                     if (getShape() == Shape.CIRCLE) {
-                        setBackgroundColor(Color.RED);
+                        setImageResource(R.drawable.circle);
                     } else {
-                        setBackgroundColor(Color.BLUE);
+                        setImageResource(R.drawable.cross);
                     }
                     activity.afterMoveAction();
                 }
@@ -38,11 +39,11 @@ public class FieldView extends View{
     public void setShape(Shape shape) {
         this.shape = shape;
         if (getShape() == Shape.CIRCLE) {
-            setBackgroundColor(Color.RED);
+            setImageResource(R.drawable.circle);
         } else if (getShape() == Shape.CROSS) {
-            setBackgroundColor(Color.BLUE);
+            setImageResource(R.drawable.cross);
         } else {
-            setBackgroundColor(Color.GRAY);
+            setImageResource(R.drawable.blank);
         }
     }
 }

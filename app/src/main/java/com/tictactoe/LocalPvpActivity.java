@@ -3,17 +3,20 @@ package com.tictactoe;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 
-public class MainGameActivity extends AppCompatActivity {
+public class LocalPvpActivity extends AppCompatActivity {
     private static final Shape startingShape = Shape.CROSS;
     private Shape currentShape;
     private int moveCounter = 0;
+    private int crossWins = 0;
+    private int circleWins = 0;
     private final Shape[][] shapesArray = new Shape[3][3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.local_pvp_activity);
         this.currentShape = startingShape;
     }
 
@@ -52,10 +55,12 @@ public class MainGameActivity extends AppCompatActivity {
         switch (checkForResult()) {
             case CROSS:
                 System.out.println("Crosses won!");
+                this.crossWins++;
                 this.resetGrid();
                 break;
             case CIRCLE:
                 System.out.println("Circles won!");
+                this.circleWins++;
                 this.resetGrid();
                 break;
             case NONE:
@@ -77,6 +82,10 @@ public class MainGameActivity extends AppCompatActivity {
         }
     }
 
+    private void drawFinishingLine(Pair<Integer, Integer> startPoint, Pair<Integer, Integer> endPoint) {
+
+    }
+
     private Shape checkForResult() {
         // Rows
         for (int x = 0; x < 3; x++) {
@@ -96,15 +105,32 @@ public class MainGameActivity extends AppCompatActivity {
             }
         }
 
-        // Bias
+        // Bias NW
         if (this.shapesArray[0][0].isCross && this.shapesArray[1][1].isCross && this.shapesArray[2][2].isCross) {
             return Shape.CROSS;
         } else if (this.shapesArray[0][0].isCircle && this.shapesArray[1][1].isCircle && this.shapesArray[2][2].isCircle) {
             return Shape.CIRCLE;
         }
 
+        // Bias SE
+        if (this.shapesArray[2][0].isCross && this.shapesArray[1][1].isCross && this.shapesArray[0][2].isCross) {
+            return Shape.CROSS;
+        } else if (this.shapesArray[2][0].isCircle && this.shapesArray[1][1].isCircle && this.shapesArray[0][2].isCircle) {
+            return Shape.CIRCLE;
+        }
+
         return Shape.NONE;
     }
+
+    public int getCircleWins() {
+        return circleWins;
+    }
+
+    public int getCrossWins() {
+        return crossWins;
+    }
+
+    // Fullscreen functionality
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
