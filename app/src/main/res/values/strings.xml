@@ -17,4 +17,8 @@
     <string name="attachment_title">Download incoming attachments</string>
     <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="curremt_move">Current move:</string>
+    <string name="vs_wins_text">WINS</string>
+    <string name="cross_wins_value"/>
+    <string name="circle_wins_value"/>
 </resources>

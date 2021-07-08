@@ -5,11 +5,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -30,6 +34,9 @@ public class LocalPvpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.local_pvp_activity);
         this.currentShape = startingShape;
+        FieldView fieldView = findViewById(R.id.field_current_move);
+        fieldView.setShape(getCurrentShape());
+        updateScore();
     }
 
     @Override
@@ -60,6 +67,9 @@ public class LocalPvpActivity extends AppCompatActivity {
 
         this.currentShape = startingShape;
         this.moveCounter = 0;
+        FieldView fieldView = findViewById(R.id.field_current_move);
+        fieldView.setShape(getCurrentShape());
+        updateScore();
     }
 
     public void afterMoveAction() {
@@ -69,6 +79,8 @@ public class LocalPvpActivity extends AppCompatActivity {
             this.currentShape = Shape.CIRCLE;
         }
         this.moveCounter++;
+        FieldView fieldView = findViewById(R.id.field_current_move);
+        fieldView.setShape(getCurrentShape());
         updateCurrentFields();
         switch (checkForResult()) {
             case CROSS:
@@ -98,6 +110,14 @@ public class LocalPvpActivity extends AppCompatActivity {
                 this.shapesArray[x - 1][y - 1] = iterationView.getShape();
             }
         }
+    }
+
+    private void updateScore() {
+        TextView circleWins = findViewById(R.id.circleWins);
+        circleWins.setText(String.valueOf(getCircleWins()));
+
+        TextView crossWins = findViewById(R.id.crossWins);
+        crossWins.setText(String.valueOf(getCrossWins()));
     }
 
     private void drawFinishingLine(Pair<Integer, Integer> startPoint, Pair<Integer, Integer> endPoint) {
@@ -139,7 +159,7 @@ public class LocalPvpActivity extends AppCompatActivity {
         //setContentView(finishLine);
 
         System.out.println("TEST4");
-        sleep(2000);
+        //sleep(2000);
     }
 
     private Shape checkForResult() {
